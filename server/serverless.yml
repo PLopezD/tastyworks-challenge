@@ -1,0 +1,30 @@
+service: tastyworks-challenge
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  uploadToDynamoDB:
+    handler: handler.uploadToDynamoDB
+    events:
+      - http: 
+          path: /upload
+          method: post
+    environment:
+      stocksTableName: stocksTable
+
+resources:
+  Resources:
+    stocksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: stocksTable
+        AttributeDefinitions:
+          - AttributeName: "stockId"
+            AttributeType: "S"
+        KeySchema:
+          - AttributeName: "stockId"
+            KeyType: "HASH"
+        BillingMode: PAY_PER_REQUEST
+    
