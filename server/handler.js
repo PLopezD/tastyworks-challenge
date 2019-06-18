@@ -1,6 +1,6 @@
 'use strict';
 
-const seedData = require('./data/seed.js');
+const seedManager = require('./data/seedManager.js');
 
 function createResponse(statusCode, message) {
   const response = {
@@ -11,7 +11,7 @@ function createResponse(statusCode, message) {
 }
 
 module.exports.uploadToDynamoDB = async (event) => {
-  seedData().then(() => {
+  seedManager.seedData().then(() => {
     return createResponse(200, 'Table successfully seeded');  
   }).catch((error) => {
     return createResponse(400, error);  
