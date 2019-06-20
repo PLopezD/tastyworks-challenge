@@ -11,8 +11,10 @@ function createResponse(statusCode, message) {
 }
 
 module.exports.getStocks = async (event) => {
-  const body = JSON.parse(event.body);
+  console.time('getStocks');
+  const body = event.body ? JSON.parse(event.body) : {};
   return stockManager.getStocks(body).then((stocks) => {
+    console.timeEnd('getStocks');
     return createResponse(200, {stocks});
   }).catch(error => {
     return createResponse(400, error);

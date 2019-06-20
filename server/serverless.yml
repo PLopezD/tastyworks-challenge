@@ -20,14 +20,12 @@ provider:
         - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/stocksTable
 
 functions:
-  uploadToDynamoDB:
-    handler: handler.uploadToDynamoDB
-    optimize:
-      includePaths: ['data/data.csv']
+  getStocks:
+    handler: handler.getStocks
     events:
       - http: 
-          path: /upload
-          method: post
+          path: /stocks
+          method: get
     environment:
       stocksTableName: stocksTable
 

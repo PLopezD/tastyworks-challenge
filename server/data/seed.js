@@ -73,16 +73,12 @@ function createTable() {
     const params = {
         TableName: STOCK_TABLE_NAME,
         AttributeDefinitions: [
-            {
-                AttributeName: 'stockId',
-                AttributeType: 'S'
-            }
+            { AttributeName: 'stockId', AttributeType: 'S'},
+            { AttributeName: "lowerName", AttributeType: "S" }  // Sort key
         ],
         KeySchema: [
-            {
-                AttributeName: 'stockId',
-                KeyType: 'HASH'
-            }
+            { AttributeName: 'stockId', KeyType: 'HASH'},
+            { AttributeName: "lowerName", KeyType: "RANGE" }
         ],
         ProvisionedThroughput: {
             ReadCapacityUnits: 5000,
