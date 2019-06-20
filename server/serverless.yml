@@ -1,12 +1,29 @@
 service: tastyworks-challenge
 
+plugins:
+  - serverless-plugin-optimize
+  - serverless-pseudo-parameters
+
+package:
+  individually: true
+  
 provider:
   name: aws
   runtime: nodejs10.x
 
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+        - dynamodb:GetItem
+      Resource:
+        - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/stocksTable
+
 functions:
   uploadToDynamoDB:
     handler: handler.uploadToDynamoDB
+    optimize:
+      includePaths: ['data/data.csv']
     events:
       - http: 
           path: /upload

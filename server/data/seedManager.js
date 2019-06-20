@@ -4,28 +4,28 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 
 const csv = require('csv-parser');
 const fs = require('fs');
+const path = require('path');
 
 const STOCK_TABLE_NAME = process.env.stocksTableName;
+const CSV_PATH = path.resolve(process.env.LAMBDA_TASK_ROOT, '_optimize', process.env.AWS_LAMBDA_FUNCTION_NAME, 'data/data.csv')
 
 module.exports.seedData = () => {
-    console.log('loading stocks..');
-    parseCSV()
+    console.log('Starting stock loading..');
+    return new Promise((resolve, reject) => {
+        console.log(1);
+        return resolve(parseCSV())
+    })
 }
 
 function parseCSV() {
-    let stocks = []
-    fs.createReadStream('data.csv')
+    fs.createReadStream(CSV_PATH)
         .pipe(csv())
         .on('data', (row) => {
-            let stock = createStock(row)
-            stocks.push(stock)
+            let stock = createStock(row);
+            saveStock(stock)
         })
         .on('end', () => {
-            return Promise.all(uploadStocks(stocks)).then(() => {
-                return 'Success'
-            }).catch(() => {
-                return 'Error'
-            })
+            console.log(3);
         });
 }
 
@@ -42,23 +42,28 @@ function createStock(row) {
         website: row.Website,
         exchange: row.Exchange
     }
-    return stock;
-}
-
-function uploadStocks(stockArray) {
-    const promises = []
-    for (let index = 0; index < stockArray.length; index++) {
-        const stock = stockArray[index];
-        promises.push(saveStock(stock))
-    }
-    return promises
+    return stock
 }
 
 function saveStock(stock) {
     const params = {
-        TableName: TABLE_NAME,
+        TableName: STOCK_TABLE_NAME,
         Item: stock
     }
+    console.log(params);
     return dynamo.put(params).promise()
 }
 
+function deleteTable() {
+    const params = {
+        TableName: STOCK_TABLE_NAME,
+    };
+    dynamodb.deleteTable(params, (err, data) => {
+        if (err) {
+            console.error("Unable to delete table. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            this.parseCSV()
+            console.log("Deleted table. Table description JSON:", JSON.stringify(data, null, 2));
+        }
+    });
+}

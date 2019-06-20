@@ -12,6 +12,11 @@
   "dependencies": {
     "aws-sdk": "^2.478.0",
     "csv-parser": "^2.3.0",
+    "serverless-pseudo-parameters": "^2.4.0",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "serverless-plugin-optimize": "^4.1.0-rc.1",
+    "yargs": "^13.2.4"
   }
 }
