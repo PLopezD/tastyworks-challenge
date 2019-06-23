@@ -5,15 +5,15 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 const TABLE_NAME = process.env.stocksTableName;
 
 // getting stocks with query (more expensive than querying)
-module.exports.getStocks = (body) => {
-    console.log(body);
+module.exports.getStocks = (queryParams) => {
+    console.log(queryParams);
     const params = {
         TableName: TABLE_NAME,
         ExpressionAttributeNames: {
             "#lowerName": "lowerName",
         },
         ExpressionAttributeValues: {
-            ":lowerName": "a",
+            ":lowerName": queryParams.name || '',
         },
         FilterExpression: "begins_with(#lowerName, :lowerName)"
     }
@@ -23,5 +23,5 @@ module.exports.getStocks = (body) => {
 }
 
 function filterItems(items) {
-    return items.sort((a, b) => {return a.lowerName === b.lowerName ? 0 : a.lowerName < b.lowerName ? -1 : 1}).slice(0, 10)
+    return items.sort((a, b) => {return a.lowerName === b.lowerName ? 0 : a.lowerName < b.lowerName ? -1 : 1}) // .slice(0, 10)
 }

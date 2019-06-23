@@ -4,6 +4,10 @@ const stockManager = require('./stockManager.js');
 
 function createResponse(statusCode, message) {
   const response = {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+    },
     statusCode: statusCode,
     body: JSON.stringify(message)
   };
@@ -11,9 +15,8 @@ function createResponse(statusCode, message) {
 }
 
 module.exports.getStocks = async (event) => {
-  console.time('getStocks');
-  const body = event.body ? JSON.parse(event.body) : {};
-  return stockManager.getStocks(body).then((stocks) => {
+  let params = event.queryStringParameters;
+  return stockManager.getStocks(params).then((stocks) => {
     console.timeEnd('getStocks');
     return createResponse(200, {stocks});
   }).catch(error => {
