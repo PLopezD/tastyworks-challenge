@@ -1,0 +1,22 @@
+$standardPadding: 10px;
+.stockList {
+    li {
+        transition: 300ms;
+        height: 40px;
+        line-height: 40px;
+        padding-left: $standardPadding; 
+        &:hover {
+            cursor:pointer;
+            background-color: #EBEBEB;
+        }
+    }
+    span {
+        float: right;
+        padding-right: $standardPadding;
+    }
+    i {
+        padding-top: $standardPadding;
+        padding-right: $standardPadding;
+        float: right;
+    }
+}
