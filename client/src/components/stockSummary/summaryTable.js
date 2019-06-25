@@ -3,9 +3,16 @@ import { connect } from 'react-redux';
 
 class SummaryTable extends Component {
     render() {
+        const stock = this.props.selectedStock;
         return (
             <section>
-                <span>table</span>
+                <a href={stock.website} rel="noopener noreferrer" target="_blank" title='external site link'>
+                    <h6>{stock.displayName} - {stock.symbol} ({stock.exchange})</h6>
+                </a>
+                <div>Sector: {stock.sector}</div>
+                <div>Last sale: ${stock.lastSale}</div>
+                <div>Market cap: {stock.marketCap}</div>
+                
             </section>
         )
     }

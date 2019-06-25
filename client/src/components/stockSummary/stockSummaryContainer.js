@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import StockSummary from './stockSummary';
 import { LoadingIcon } from '../../components';
 import ApiService from '../../services/apiService'
+import './stockSummary.scss';
 
 class StockSummaryContainer extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class StockSummaryContainer extends Component {
             data: []
         };
     }
-
+    componentDidMount(){
+        this.refreshData(this.props.selectedStock);
+    }
     componentWillUpdate(nextProps) {
         if (this.props.selectedStock !== nextProps.selectedStock) {
             this.refreshData(nextProps.selectedStock);
@@ -31,7 +34,7 @@ class StockSummaryContainer extends Component {
 
     render() {
         return (
-            <section>
+            <section className="summary-container">
                 {this.state.loading ? 
                   <LoadingIcon style={{left: '50%', marginLeft: '-50px'}}/> : 
                   <StockSummary data={this.state.data}/>

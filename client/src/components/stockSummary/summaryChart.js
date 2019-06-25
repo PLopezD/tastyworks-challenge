@@ -1,13 +1,42 @@
 import React, { Component } from 'react';
+import ChartService from '../../services/chartService'
 import { connect } from 'react-redux';
+const google = window.google;
 
 class SummaryChart extends Component {
+    componentDidMount() {
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(this.drawChart.bind(this));
+    }
+    componentWillReceiveProps() {
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(this.drawChart.bind(this));
+    }
+
     render() {
         return (
             <section>
-                <span>chart</span>
+                <div id='chart-holder'></div>
             </section>
         )
+    }
+    drawChart() {
+        if (this.props.data.length >= 1) {
+            let cleanData = ChartService.cleanData(this.props.data);
+            let data = google.visualization.arrayToDataTable(cleanData, true);
+            let options = {
+                legend: 'none',
+                hAxis: {
+                    title: 'Date'
+                },
+                vAxis: {
+                    title: '$'
+                }
+            };
+    
+            let chart = new google.visualization.CandlestickChart(document.getElementById('chart-holder'));
+            chart.draw(data, options);
+        }
     }
 }
 
@@ -18,24 +47,3 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(SummaryChart);
 
-// google.charts.load('current', { 'packages': ['corechart'] });
-// google.charts.setOnLoadCallback(drawChart);
-
-// function drawChart() {
-//     var data = google.visualization.arrayToDataTable([
-//         ['Mon', 20, 28, 38, 45],
-//         ['Tue', 31, 38, 55, 66],
-//         ['Wed', 50, 55, 77, 80],
-//         ['Thu', 77, 77, 66, 50],
-//         ['Fri', 68, 66, 22, 15]
-//         // Treat first row as data as well.
-//     ], true);
-
-//     var options = {
-//         legend: 'none'
-//     };
-
-//     var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
-
-//     chart.draw(data, options);
-// }

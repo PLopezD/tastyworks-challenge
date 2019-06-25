@@ -8,8 +8,8 @@ class StockSummary extends Component {
     render() {
         return (
             <section>
-                <SummaryTable></SummaryTable>
-                <SummaryChart></SummaryChart>
+                <SummaryTable {...this.props}></SummaryTable>
+                <SummaryChart {...this.props}></SummaryChart>
             </section>
         )
     }
