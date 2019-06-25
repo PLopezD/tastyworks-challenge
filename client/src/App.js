@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SearchBar from './search/searchBar';
 import Navigation from './components';
+import SearchBar from './components/search/searchBar';
+import StockSummary from './components/stockSummary/stockSummary';
 
 import 'materialize-css'; 
 import 'materialize-css/dist/css/materialize.min.css';
@@ -16,6 +17,7 @@ class App extends Component {
       <div className="app container">
         <Navigation></Navigation>
         <SearchBar></SearchBar>
+        <StockSummary></StockSummary>
       </div>
     );
   }

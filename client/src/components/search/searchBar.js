@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setStocks, selectStock } from '../actions/stockActions'
-import ApiService from '../services/apiService'
+import { setStocks, selectStock } from '../../actions/stockActions'
+import ApiService from '../../services/apiService'
 import SearchBarForm from './searchBarForm';
 import StockList from './stockList';
 
@@ -11,7 +11,6 @@ class SearchBar extends Component {
         this.state = {
             searchValue: ''
         };
-
     }
     
     handleSearch(event) {
@@ -31,19 +30,23 @@ class SearchBar extends Component {
             const subSelection = this.props.stocks.filter(stock => stock.lowerName.startsWith(searchValue)).slice(0, 10)
             if (subSelection.length === 1 && this.props.selectedStock && subSelection[0].displayName !== this.props.selectedStock.displayName) {
                 // only one stock left, select it
-                this.props.selectStock(subSelection[0])
-                this.setState({ displayStocks: [], searchValue: subSelection[0].displayName })
+                this.handleSelect(subSelection[0])
             } else {
                 this.setState({displayStocks: subSelection})
             }
         }
+    }
+
+    handleSelect(stock) {
+        this.props.selectStock(stock)
+        this.setState({ displayStocks: [], searchValue: stock.displayName })
     }
     
     render() {
         return (
             <div>
                 <SearchBarForm value={this.state.searchValue} handleChange={this.handleSearch.bind(this)}/>
-                <StockList stocks={this.state.displayStocks}/>
+                <StockList stocks={this.state.displayStocks} handleSelect={this.handleSelect.bind(this)}/>
             </div>
         )
     }
