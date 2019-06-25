@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Navigation from './components';
+import { Navigation } from './components';
 import SearchBar from './components/search/searchBar';
-import StockSummary from './components/stockSummary/stockSummary';
+import StockSummaryContainer from './components/stockSummary/stockSummaryContainer';
 
 import 'materialize-css'; 
 import 'materialize-css/dist/css/materialize.min.css';
@@ -14,11 +14,11 @@ const mapStateToProps = state => ({...state})
 class App extends Component {
   render() {
     return (
-      <div className="app container">
+      <main className="app container">
         <Navigation></Navigation>
         <SearchBar></SearchBar>
-        <StockSummary></StockSummary>
-      </div>
+        <StockSummaryContainer></StockSummaryContainer>
+      </main>
     );
   }
 }

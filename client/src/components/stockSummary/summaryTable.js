@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SummaryChart from './summaryChart';
-import SummaryTable from './summaryTable';
 
-
-class StockSummary extends Component {
+class SummaryTable extends Component {
     render() {
         return (
             <section>
-                <SummaryTable></SummaryTable>
-                <SummaryChart></SummaryChart>
+                <span>table</span>
             </section>
         )
     }
@@ -20,4 +16,5 @@ const mapStateToProps = state => ({
     selectedStock: state.stockReducer.selectedStock
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(StockSummary);
+
+export default connect(mapStateToProps, mapDispatchToProps)(SummaryTable);

@@ -1,3 +1,7 @@
 import Navigation from './navigation'
+import LoadingIcon from './loadingIcon'
 
-export default Navigation
+export {
+    Navigation, 
+    LoadingIcon
+}

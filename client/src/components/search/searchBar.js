@@ -9,6 +9,7 @@ class SearchBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             searchValue: ''
         };
     }
@@ -21,9 +22,10 @@ class SearchBar extends Component {
             this.setState({ displayStocks: [] })
         } else if (searchValue.length === 1) {
             // one character entered, make api call
+            this.setState({loading: true})
             ApiService.getStocks(searchValue).then(res => {
                 this.props.setStocks(res)
-                this.setState({ displayStocks: res.slice(0, 10) })
+                this.setState({ displayStocks: res.slice(0, 10), loading: false })
             })
         } else {
             // subselect from already called stocks
@@ -36,7 +38,12 @@ class SearchBar extends Component {
             }
         }
     }
-
+    handleSubmit(e) {
+        e.preventDefault()
+        if (this.state.displayStocks && this.state.displayStocks[0]){
+            this.handleSelect(this.state.displayStocks[0])
+        }
+    }
     handleSelect(stock) {
         this.props.selectStock(stock)
         this.setState({ displayStocks: [], searchValue: stock.displayName })
@@ -45,7 +52,12 @@ class SearchBar extends Component {
     render() {
         return (
             <div>
-                <SearchBarForm value={this.state.searchValue} handleChange={this.handleSearch.bind(this)}/>
+                <SearchBarForm 
+                    value={this.state.searchValue} 
+                    handleChange={this.handleSearch.bind(this)} 
+                    handleSubmit={this.handleSubmit.bind(this)} 
+                    loading={this.state.loading}
+                    />
                 <StockList stocks={this.state.displayStocks} handleSelect={this.handleSelect.bind(this)}/>
             </div>
         )
