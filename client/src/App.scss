@@ -4,3 +4,13 @@
 .loading-holder {
     position: absolute;
 }
+.recent-searches {
+    margin: 20px;
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+    justify-content: space-around;
+    .waves-effect {
+        z-index: 0;
+    }
+}

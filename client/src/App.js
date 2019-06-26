@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Navigation } from './components';
 import SearchBar from './components/search/searchBar';
 import StockSummaryContainer from './components/stockSummary/stockSummaryContainer';
+import { RecentSearches } from './components';
 
 import 'materialize-css'; 
 import 'materialize-css/dist/css/materialize.min.css';
@@ -17,7 +18,7 @@ class App extends Component {
       <main className="app container">
         <Navigation></Navigation>
         <SearchBar></SearchBar>
-        {/* <RecentSearches></RecentSearches> */}
+        <RecentSearches></RecentSearches>
         <StockSummaryContainer></StockSummaryContainer>
       </main>
     );

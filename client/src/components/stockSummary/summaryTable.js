@@ -10,9 +10,8 @@ class SummaryTable extends Component {
                     <h6>{stock.displayName} - {stock.symbol} ({stock.exchange})</h6>
                 </a>
                 <div>Sector: {stock.sector}</div>
-                <div>Last sale: ${stock.lastSale}</div>
+                {/* <div>Last sale: ${stock.lastSale}</div> */}
                 <div>Market cap: {stock.marketCap}</div>
-                
             </section>
         )
     }

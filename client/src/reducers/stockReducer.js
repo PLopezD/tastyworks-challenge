@@ -1,5 +1,6 @@
 export default (state = {
   stocks: [],
+  recents: [],
   selectedStock: {
     displayName: "Cracker Barrel Old Country Store, Inc.",
     exchange: "NASDAQ",
@@ -23,6 +24,21 @@ export default (state = {
       return {
         ...state,
         selectedStock: action.payload
+      }
+    case 'SET_RECENTS':
+      return {
+        ...state,
+        recents: action.payload
+      }
+    case 'ADD_RECENT':
+      if (state.recents) {
+        state.recents.push(action.payload)
+      } else {
+        state.recents = [action.payload]
+      }
+      state.recents = [...new Set(state.recents)]
+      return {
+        ...state
       }
     default:
       return state
