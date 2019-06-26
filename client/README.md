@@ -3,7 +3,7 @@ I started this app with create react app to avoid having to write some boilerpla
 As of now `npm start` points to my api which has a baseUrl of: <br>
 https://wiei5kwurd.execute-api.us-east-1.amazonaws.com  
 
-If you want to switch to to your baseUrl if you deploy your own lambdas you can update the ApiService constructor and everything should work on it's own. 
+If you want to switch to your baseUrl if you deploy your own lambdas you can update the ApiService constructor and everything should work on it's own. 
 
 ### `npm start`
 
