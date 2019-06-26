@@ -17,7 +17,7 @@ class SearchBar extends Component {
     
     handleSearch(event) {
         const searchValue = event.target.value.toLowerCase();
-        this.setState({ searchValue: searchValue });
+        this.setState({ searchValue: searchValue, noResults: false });
         if (searchValue.length === 0) {
             // no searching, display nothing
             this.setState({ displayStocks: [] })
@@ -25,19 +25,19 @@ class SearchBar extends Component {
             // one character entered, make api call
             this.setState({loading: true})
             ApiService.getStocks(searchValue).then(res => {
-                this.props.setStocks(res)
-                this.setState({ displayStocks: res.slice(0, 10), loading: false })
+                this.setState({ loading: false })
+                if (res) {
+                    this.props.setStocks(res)
+                    this.setState({ displayStocks: res.slice(0, 10), noResults: res.length === 0 })
+                } else {
+                    this.setState({noResults: true})
+                }
             })
         } else {
             // subselect from already called stocks
             const subSelection = this.props.stocks.filter(stock => stock.lowerName.startsWith(searchValue)).slice(0, 10)
-            if (subSelection.length === 1 && this.props.selectedStock && subSelection[0].displayName !== this.props.selectedStock.displayName) {
-                // only one stock left, select it
-                this.handleSelect(subSelection[0])
-            } else {
-                if (!this.state.loading) {
-                    this.setState({displayStocks: subSelection})
-                }
+            if (!this.state.loading) {
+                this.setState({displayStocks: subSelection, noResults: subSelection.length === 0})
             }
         }
     }
@@ -61,12 +61,13 @@ class SearchBar extends Component {
                     handleChange={this.handleSearch.bind(this)} 
                     handleSubmit={this.handleSubmit.bind(this)} 
                     loading={this.state.loading}
+                    noResults={this.state.noResults}
                     />
                 <StockList stocks={this.state.displayStocks} handleSelect={this.handleSelect.bind(this)} width={this.state.width}/>
             </div>
         )
     }
-    
+
     componentDidMount() {
         this.setState({width: ReactDOM.findDOMNode(this.searchBar).getBoundingClientRect().width})
     }

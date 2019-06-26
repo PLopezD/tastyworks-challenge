@@ -11,12 +11,13 @@ class SearchBarForm extends Component {
                         autoFocus
                         id='search-input'
                         type="text" 
-                        autocomplete="off" 
+                        autoComplete="off" 
                         value={this.props.value} 
                         onChange={this.props.handleChange} 
                         placeholder="Search.."
                     />
                     {this.props.loading ? <LoadingIcon size={'small'} style={{top: 3, right: 0}} /> : null}
+                    {this.props.noResults ? <span style={{float:'right'}}>No results</span> : null}
                 </label>
             </form>
         )
