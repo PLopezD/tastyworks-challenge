@@ -23,6 +23,8 @@ class StockList extends Component {
                         <i className="material-icons">open_in_new</i>
                     </a>
                     <span>{stock.symbol}</span>
+                    <span>-</span>
+                    <span>{stock.exchange}</span>
                 </li>
             );
         }

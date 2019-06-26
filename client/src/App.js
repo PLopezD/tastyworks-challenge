@@ -17,6 +17,7 @@ class App extends Component {
       <main className="app container">
         <Navigation></Navigation>
         <SearchBar></SearchBar>
+        {/* <RecentSearches></RecentSearches> */}
         <StockSummaryContainer></StockSummaryContainer>
       </main>
     );

@@ -11,6 +11,7 @@ class SearchBarForm extends Component {
                         autoFocus
                         id='search-input'
                         type="text" 
+                        autocomplete="off" 
                         value={this.props.value} 
                         onChange={this.props.handleChange} 
                         placeholder="Search.."

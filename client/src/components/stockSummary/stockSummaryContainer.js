@@ -36,7 +36,7 @@ class StockSummaryContainer extends Component {
         return (
             <section className="summary-container">
                 {this.state.loading ? 
-                  <LoadingIcon style={{left: '50%', marginLeft: '-50px'}}/> : 
+                  <LoadingIcon style={{left: '50%', marginLeft: '-50px', marginTop:'100px'}}/> : 
                   <StockSummary data={this.state.data}/>
                 } 
             </section>
