@@ -13,7 +13,7 @@ module.exports.getStocks = (queryParams) => {
             "#lowerName": "lowerName",
         },
         ExpressionAttributeValues: {
-            ":lowerName": queryParams.name || '',
+            ":lowerName": queryParams.name || 'a',
         },
         FilterExpression: "begins_with(#lowerName, :lowerName)"
     }
