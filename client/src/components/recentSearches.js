@@ -27,7 +27,7 @@ class RecentSearches extends Component {
         if (this.props.recents) {
             return this.props.recents.slice(-5).reverse().map((stock, i) =>
                 <span className="waves-effect waves-light btn-small" key={`${stock.stockId}${i}`} onClick={() => this.props.selectStock(stock)}>
-                    <i className="material-icons right">cloud</i>
+                    <i className="material-icons right">bookmark</i>
                     {stock.displayName}
                 </span>
             )
