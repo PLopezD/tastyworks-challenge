@@ -1,5 +1,9 @@
 $standardPadding: 10px;
-.stockList {
+.stock-list {
+    position: absolute;
+    background-color: #EBEBEB;
+    z-index: 1;
+    margin-top: 0;
     li {
         transition: 300ms;
         height: 40px;
@@ -7,7 +11,7 @@ $standardPadding: 10px;
         padding-left: $standardPadding; 
         &:hover {
             cursor:pointer;
-            background-color: #EBEBEB;
+            background-color: white;
         }
     }
     span {
@@ -19,4 +23,8 @@ $standardPadding: 10px;
         padding-right: $standardPadding;
         float: right;
     }
+}
+
+#search-input {
+    margin-bottom: 0;
 }

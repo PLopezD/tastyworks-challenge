@@ -9,7 +9,7 @@ class StockList extends Component {
     render() {
         const itemList = this.makeList()
         return (
-            <ul className='stockList'>
+            <ul className='stock-list' style={{width:this.props.width}}>
                 {itemList}
             </ul>
         )

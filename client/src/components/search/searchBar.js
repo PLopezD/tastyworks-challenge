@@ -4,6 +4,7 @@ import { setStocks, selectStock } from '../../actions/stockActions'
 import ApiService from '../../services/apiService'
 import SearchBarForm from './searchBarForm';
 import StockList from './stockList';
+import ReactDOM from 'react-dom';
 
 class SearchBar extends Component {
     constructor(props) {
@@ -34,7 +35,9 @@ class SearchBar extends Component {
                 // only one stock left, select it
                 this.handleSelect(subSelection[0])
             } else {
-                this.setState({displayStocks: subSelection})
+                if (!this.state.loading) {
+                    this.setState({displayStocks: subSelection})
+                }
             }
         }
     }
@@ -53,14 +56,19 @@ class SearchBar extends Component {
         return (
             <div>
                 <SearchBarForm 
+                    ref={searchBar => { this.searchBar = searchBar }}
                     value={this.state.searchValue} 
                     handleChange={this.handleSearch.bind(this)} 
                     handleSubmit={this.handleSubmit.bind(this)} 
                     loading={this.state.loading}
                     />
-                <StockList stocks={this.state.displayStocks} handleSelect={this.handleSelect.bind(this)}/>
+                <StockList stocks={this.state.displayStocks} handleSelect={this.handleSelect.bind(this)} width={this.state.width}/>
             </div>
         )
+    }
+    
+    componentDidMount() {
+        this.setState({width: ReactDOM.findDOMNode(this.searchBar).getBoundingClientRect().width})
     }
 }
 
