@@ -36,8 +36,13 @@ class SearchBar extends Component {
         } else {
             // subselect from already called stocks
             const subSelection = this.props.stocks.filter(stock => stock.lowerName.startsWith(searchValue)).slice(0, 10)
-            if (!this.state.loading) {
-                this.setState({displayStocks: subSelection, noResults: subSelection.length === 0})
+            if (subSelection.length === 1 && this.props.selectedStock && subSelection[0].displayName !== this.props.selectedStock.displayName) {
+                // only one stock left, select it
+                this.handleSelect(subSelection[0])
+            } else {
+                if (!this.state.loading) {
+                    this.setState({ displayStocks: subSelection, noResults: subSelection.length === 0 })
+                }
             }
         }
     }
